@@ -17,19 +17,13 @@ jobs:
         distribution: "temurin"
         java-version: "17"
 
-    - name: Install Android SDK & Build APK
+    - name: Build with Gradle
       run: |
-        export ANDROID_HOME=$HOME/android-sdk
-        mkdir -p $ANDROID_HOME
-        gradle assembleDebug || ./gradlew assembleDebug || echo "Build fallback"
+        chmod +x gradlew
+        ./gradlew assembleDebug
 
-    - name: Generate mock APK for test if build is layout-only
-      run: |
-        mkdir -p app/build/outputs/apk/debug/
-        echo "L.I.R.A. binary placeholder" > app/build/outputs/apk/debug/app-debug.apk
-
-    - name: Upload APK Artifact
+    - name: Upload APK
       uses: actions/upload-artifact@v4
       with:
         name: Lira-App-Debug
-        path: "**/app-debug.apk"
+        path: app/build/outputs/apk/debug/app-debug.apk
