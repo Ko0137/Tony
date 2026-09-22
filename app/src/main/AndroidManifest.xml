@@ -1,0 +1,4 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.lira.assistant">
+    <application android:allowBackup="true" android:icon="@mipmap/ic_launcher" android:label="L.I.R.A." android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@android:style/Theme.Material.NoActionBar">
+    </application>
+</manifest>
