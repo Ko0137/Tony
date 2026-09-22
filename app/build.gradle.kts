@@ -38,7 +38,6 @@ android {
 }
 
 dependencies {
-    implementation(project(":core"))
     implementation(project(":features:chat"))
     implementation(project(":features:settings"))
     implementation("androidx.core:core-ktx:1.12.0")
