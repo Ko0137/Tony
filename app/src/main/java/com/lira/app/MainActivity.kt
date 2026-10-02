@@ -19,7 +19,6 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Простейший контейнер на чистых цветах без тем
             Box(
                 modifier = Modifier
                     .fillMaxSize()
@@ -33,7 +32,7 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun LiraSimpleChatScreen() {
-    var textInput by remember { mutableState("") }
+    var textInput by remember { mutableStateOf("") }
     val messages = remember { mutableStateListOf("L.I.R.A. активна и готова к работе.") }
 
     Column(
@@ -46,7 +45,7 @@ fun LiraSimpleChatScreen() {
         Text(
             text = "L.I.R.A. Assistant",
             fontSize = 20.sp,
-            color = Color.Magenta,
+            color = Color(0xFF6200EE),
             modifier = Modifier.padding(top = 24.dp, bottom = 8.dp)
         )
 
