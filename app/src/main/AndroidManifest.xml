@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
 
     <application
-        android:name=".LiraApp"
+        
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="L.I.R.A."
