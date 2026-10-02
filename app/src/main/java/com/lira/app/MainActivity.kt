@@ -3,7 +3,7 @@ package com.lira.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -21,9 +21,15 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            // Принудительно используем светлую тему или явно задаем цвета, чтобы экран не был черным
+            // Используем стандартную светлую схему Material3 принудительно, чтобы всё было видно
             MaterialTheme(
-                colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
+                colorScheme = lightColorScheme(
+                    primary = Color(0xFF6200EE),
+                    onPrimary = Color.White,
+                    background = Color(0xFFF5F5F5),
+                    surface = Color.White,
+                    onSurface = Color.Black
+                )
             ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -39,15 +45,15 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiraChatScreen() {
-    var textInput by remember { mutableState("") }
+    var textInput by remember { mutableStateOf("") }
     val messages = remember { mutableStateListOf("L.I.R.A. готова к работе. Задайте вопрос.") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("L.I.R.A. Assistant", color = MaterialTheme.colorScheme.onPrimaryContainer) },
+                title = { Text("L.I.R.A. Assistant", color = Color.White) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = Color(0xFF6200EE)
                 )
             )
         }
@@ -56,6 +62,7 @@ fun LiraChatScreen() {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)
+                .background(Color(0xFFF5F5F5))
                 .padding(16.dp),
             verticalArrangement = Arrangement.SpaceBetween
         ) {
@@ -70,14 +77,15 @@ fun LiraChatScreen() {
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surfaceVariant
-                        )
+                            containerColor = Color.White
+                        ),
+                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
                     ) {
                         Text(
                             text = message,
                             modifier = Modifier.padding(12.dp),
                             fontSize = 16.sp,
-                            color = MaterialTheme.colorScheme.onSurfaceVariant
+                            color = Color.Black
                         )
                     }
                 }
@@ -93,7 +101,9 @@ fun LiraChatScreen() {
                 OutlinedTextField(
                     value = textInput,
                     onValueChange = { textInput = it },
-                    modifier = Modifier.weight(1f),
+                    modifier = Modifier
+                        .weight(1f)
+                        .background(Color.White, shape = MaterialTheme.shapes.small),
                     placeholder = { Text("Введите запрос...") },
                     singleLine = true
                 )
@@ -106,9 +116,10 @@ fun LiraChatScreen() {
                             textInput = ""
                             messages.add("L.I.R.A.: Обрабатываю запрос: \"$query\"")
                         }
-                    }
+                    },
+                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF6200EE))
                 ) {
-                    Text("Отправить")
+                    Text("Отправить", color = Color.White)
                 }
             }
         }
