@@ -3,8 +3,6 @@ name: Build L.I.R.A. APK
 on:
   push:
     branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
 
 jobs:
   build:
@@ -20,5 +18,14 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Check structure
-      run: ls -la
+    - name: Setup Gradle
+      uses: gradle/actions/setup-gradle@v3
+
+    - name: Build Debug APK
+      run: gradle assembleDebug
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: lira-app-debug
+        path: app/build/outputs/apk/debug/*.apk
