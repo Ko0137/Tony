@@ -3,6 +3,7 @@ package com.lira.app
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,6 +11,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import dagger.hilt.android.AndroidEntryPoint
@@ -19,7 +21,10 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MaterialTheme {
+            // Принудительно используем светлую тему или явно задаем цвета, чтобы экран не был черным
+            MaterialTheme(
+                colorScheme = if (isSystemInDarkTheme()) darkColorScheme() else lightColorScheme()
+            ) {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
@@ -34,16 +39,15 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LiraChatScreen() {
-    var textInput by remember { mutableStateOf("") }
+    var textInput by remember { mutableState("") }
     val messages = remember { mutableStateListOf("L.I.R.A. готова к работе. Задайте вопрос.") }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("L.I.R.A. Assistant") },
+                title = { Text("L.I.R.A. Assistant", color = MaterialTheme.colorScheme.onPrimaryContainer) },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer,
-                    titleContentColor = MaterialTheme.colorScheme.onPrimaryContainer
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
                 )
             )
         }
@@ -72,7 +76,8 @@ fun LiraChatScreen() {
                         Text(
                             text = message,
                             modifier = Modifier.padding(12.dp),
-                            fontSize = 16.sp
+                            fontSize = 16.sp,
+                            color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
                     }
                 }
@@ -99,7 +104,6 @@ fun LiraChatScreen() {
                             messages.add("Вы: $textInput")
                             val query = textInput
                             textInput = ""
-                            // Эмуляция ответа системы
                             messages.add("L.I.R.A.: Обрабатываю запрос: \"$query\"")
                         }
                     }
