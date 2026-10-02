@@ -3,6 +3,15 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        releaseConfig {
+            keyAlias 'lira-key'
+            keyPassword 'lirapass123'
+            storeFile file('release.keystore')
+            storePassword 'lirapass123'
+        }
+    }
+
     namespace 'com.lira.app'
     compileSdk 34
 
